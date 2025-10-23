@@ -3,6 +3,10 @@ using UnityEngine.Events;
 
 public class Hitbox : MonoBehaviour
 {
+    [Header("Health")]
+    [SerializeField] Health health;
+
+    [Header("Collisions")]
     [SerializeField] DamageFlash[] flashs;
 
     public UnityEvent OnTookDamage;
@@ -14,5 +18,6 @@ public class Hitbox : MonoBehaviour
             flash.Flash();
         }
         OnTookDamage?.Invoke();
+        health.TakeDamage(damage);
     }
 }
