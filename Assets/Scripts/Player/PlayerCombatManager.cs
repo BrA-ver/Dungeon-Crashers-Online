@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerCombatManager : MonoBehaviour
+public class PlayerCombatManager : CharacterCombatManager
 {
     protected Player player;
     protected bool isAttacking;
@@ -12,11 +12,17 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] float comboReset = 1f;
     float resetCounter;
 
-
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        player = GetComponent<Player>();
+        base.Awake();
+        player = character as Player;
     }
+
+
+    //protected virtual void Awake()
+    //{
+    //    player = GetComponent<Player>();
+    //}
 
     protected virtual void Update()
     {
@@ -34,27 +40,25 @@ public class PlayerCombatManager : MonoBehaviour
         }
     }
 
-    public virtual void Attack()
+    public override void Attack()
     {
         isAttacking = true;
         Attack currentAttack = attackCombo[comboIndex];
-        player.AnimationHandler.PlayTargetAnimation(currentAttack.animName);
-        player.PlayerMovement.Dash(currentAttack.dashSpeed, currentAttack.duration);
+        attackAnim = currentAttack.animName;
+        player.Movement.Dash(currentAttack.dashSpeed, currentAttack.duration);
+        base.Attack();
     }
-    public virtual void FinishAttack()
+    public override void FinishAttack()
     {
-        if (isAttacking)
+        isAttacking = false;
+        player.isPerformingAction = false;
+        comboIndex++;
+        if (comboIndex >= attackCombo.Length)
         {
-            isAttacking = false;
-            player.isPerformingAction = false;
-            comboIndex++;
-            if (comboIndex >= attackCombo.Length)
-            {
-                comboIndex = 0;
-            }
-
-            resetCounter = comboReset;
+            comboIndex = 0;
         }
+
+        resetCounter = comboReset;
     }
 }
 

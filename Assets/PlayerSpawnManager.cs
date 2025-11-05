@@ -1,10 +1,13 @@
 using Unity.Netcode;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject[] playerPrefabs;
     int currentPrefab;
+
+    [SerializeField] List<GameObject> cleintObjects;
 
     private void Start()
     {
@@ -30,7 +33,6 @@ public class PlayerSpawnManager : MonoBehaviour
         }
         GameObject current = playerPrefabs[currentPrefab];
         
-
         NetworkManager.Singleton.NetworkConfig.PlayerPrefab = current;
     }
 }

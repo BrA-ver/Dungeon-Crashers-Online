@@ -120,3 +120,4 @@ MonoBehaviour:
   playerPrefabs:
   - {fileID: 4841540469845224367, guid: 8d46885e52a21004eaccd2aad47c556d, type: 3}
   - {fileID: 2638292148981757422, guid: 1e3e2e76716719545be4b23975006052, type: 3}
+  cleintObjects: []

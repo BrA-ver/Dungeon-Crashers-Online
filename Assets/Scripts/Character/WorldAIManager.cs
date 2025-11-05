@@ -9,11 +9,11 @@ public class WorldAIManager : MonoBehaviour
     public static WorldAIManager instance;
 
     [Header("Characters")]
-    [SerializeField] GameObject[] aiCharacters;
+    [SerializeField] Character[] aiCharacters;
     [SerializeField] CharacterSceneSpawnPos[] spawnPosistions;
     [SerializeField] List<GameObject> spawnedCharacters = new List<GameObject>();
 
-    [SerializeField] List<CharacterSpawner> spawners = new List<CharacterSpawner>();
+    [SerializeField] List<EnemySpawner> spawners = new List<EnemySpawner>();
 
 
     private void Awake()
@@ -28,7 +28,7 @@ public class WorldAIManager : MonoBehaviour
         }
     }
 
-    public void SpawnCharacter(CharacterSpawner spawner)
+    public void SpawnCharacter(EnemySpawner spawner)
     {
         if (NetworkManager.Singleton.IsServer)
         {

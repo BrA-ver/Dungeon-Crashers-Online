@@ -14,7 +14,7 @@ public class InputHandler : MonoBehaviour
     public event Action onJumpPress;
 
     int sceneIndex;
-    bool ignoreInput = true;
+    bool ignoreInput = false;
 
     private void Awake()
     {
@@ -34,18 +34,18 @@ public class InputHandler : MonoBehaviour
     private void OnEnable()
     {
         Scene cuurentScene = SceneManager.GetActiveScene();
-        if (cuurentScene.buildIndex == 0)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            ignoreInput = true;
-        }
-        else
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            ignoreInput = false;
-        }
+        //if (cuurentScene.buildIndex == 0)
+        //{
+        //    Cursor.visible = true;
+        //    Cursor.lockState = CursorLockMode.None;
+        //    ignoreInput = true;
+        //}
+        //else
+        //{
+        //    Cursor.visible = false;
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    ignoreInput = false;
+        //}
     }
 
     private void OnDestroy()
@@ -55,18 +55,18 @@ public class InputHandler : MonoBehaviour
 
     private void OmSceneChange(Scene scene0, Scene scene1)
     {
-        if (scene1.buildIndex == 0)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            ignoreInput = true;
-        }
-        else
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            ignoreInput = false;
-        }
+        //if (scene1.buildIndex == 0)
+        //{
+        //    Cursor.visible = true;
+        //    Cursor.lockState = CursorLockMode.None;
+        //    ignoreInput = true;
+        //}
+        //else
+        //{
+        //    Cursor.visible = false;
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    ignoreInput = false;
+        //}
 
         
     }

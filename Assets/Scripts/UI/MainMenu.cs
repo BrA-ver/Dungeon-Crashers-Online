@@ -6,12 +6,32 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayAsHost()
     {
-        NetworkManager.Singleton.StartHost();
-        SceneManager.LoadScene(1);
+        //NetworkManager.Singleton.StartHost();
+        //SceneManager.LoadScene(2);
+
+        //// Start hosting
+        //if (NetworkManager.Singleton.StartHost())
+        //{
+        //    // Load the game scene through Netcode's scene manager
+        //    NetworkManager.Singleton.SceneManager.LoadScene(
+        //        "World", // or SceneManager.GetSceneByBuildIndex(1).name
+        //        LoadSceneMode.Single
+        //    );
+        //}
+
+        Debug.Log("=== HOST button pressed ===");
+        bool started = NetworkManager.Singleton.StartHost();
+        Debug.Log("Host started: " + started);
+        if (started)
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene("Arena", LoadSceneMode.Single);
+        }
     }
 
     public void PlayAsClient()
     {
-        NetworkManager.Singleton.StartClient();
+        Debug.Log("Trying to start client...");
+        bool started = NetworkManager.Singleton.StartClient();
+        Debug.Log("StartClient() returned: " + started);
     }
 }

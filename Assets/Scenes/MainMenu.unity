@@ -676,7 +676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6189657612544611978, guid: 82761b91059624640a088da5085f6e76, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6189657612544611978, guid: 82761b91059624640a088da5085f6e76, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -792,6 +792,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7674889218696795087, guid: 82761b91059624640a088da5085f6e76, type: 3}
   m_PrefabInstance: {fileID: 1168483135}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1168483137 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6189657612544611978, guid: 82761b91059624640a088da5085f6e76, type: 3}
+  m_PrefabInstance: {fileID: 1168483135}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1212828279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -840,6 +851,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2900125060853974027, guid: 05deb02b824adf448b8ffaa8efb7c8bb, type: 3}
+      propertyPath: ConnectionData.ServerListenAddress
+      value: 0.0.0.0
+      objectReference: {fileID: 0}
     - target: {fileID: 3363274593612563678, guid: 05deb02b824adf448b8ffaa8efb7c8bb, type: 3}
       propertyPath: m_Name
       value: Network Manager
@@ -847,8 +862,49 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3363274593612563678, guid: 05deb02b824adf448b8ffaa8efb7c8bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1212828282}
+    - targetCorrespondingSourceObject: {fileID: 3363274593612563678, guid: 05deb02b824adf448b8ffaa8efb7c8bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1212828281}
   m_SourcePrefab: {fileID: 100100000, guid: 05deb02b824adf448b8ffaa8efb7c8bb, type: 3}
+--- !u!1 &1212828280 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3363274593612563678, guid: 05deb02b824adf448b8ffaa8efb7c8bb, type: 3}
+  m_PrefabInstance: {fileID: 1212828279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1212828281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212828280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6b9fdf8beeb0b479dd2be5890b9404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  broadcastPort: 47777
+  broadcastMessage: NGO_HOST_HERE
+  detectedHostIP: 
+--- !u!114 &1212828282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212828280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31494ccb2240c64196fecff527b96bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hostButton: {fileID: 2805170183339906615}
+  clientButton: {fileID: 1168483137}
+  lanDiscovery: {fileID: 1212828281}
 --- !u!1 &1303619248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,6 +1439,7 @@ GameObject:
   - component: {fileID: 2935203228662407196}
   - component: {fileID: 6653130579471292310}
   - component: {fileID: 8763017260392720227}
+  - component: {fileID: 8763017260392720228}
   - component: {fileID: 4621922575050941476}
   m_Layer: 5
   m_Name: Canvas
@@ -1436,7 +1493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6189657612544611978, guid: 82761b91059624640a088da5085f6e76, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6189657612544611978, guid: 82761b91059624640a088da5085f6e76, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1552,6 +1609,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7674889218696795087, guid: 82761b91059624640a088da5085f6e76, type: 3}
   m_PrefabInstance: {fileID: 2805170183339906613}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2805170183339906615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6189657612544611978, guid: 82761b91059624640a088da5085f6e76, type: 3}
+  m_PrefabInstance: {fileID: 2805170183339906613}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!223 &2935203228662407196
 Canvas:
   m_ObjectHideFlags: 0
@@ -1744,6 +1812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e0c20d21c5cf34ba3bda53c7d139db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!222 &5282777562071907467
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2159,6 +2228,31 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8763017260392720228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546249272544153610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2194603219
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &8924848491073247060
 MonoBehaviour:
   m_ObjectHideFlags: 0

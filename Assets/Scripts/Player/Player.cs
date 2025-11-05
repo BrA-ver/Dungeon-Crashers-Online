@@ -1,74 +1,98 @@
 using UnityEngine;
 using Unity.Netcode;
+using System;
+using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(PlayerMovement), typeof(PlayerNetworkManager))]
-public class Player : NetworkBehaviour
+[RequireComponent(typeof(PlayerMovement))]
+public class Player : Character
 {
-    // Syncing
-    protected PlayerNetworkManager networkManager;
-
-    protected PlayerMovement movement;
-    protected PlayerAnimationHandler animationHandler;
-    protected PlayerCombatManager combatManager;
+    bool isActive = true;
+    protected PlayerAnimationHandler playerAnimationHandler;
     protected GroundCheck groundCheck;
 
     public CharacterController controller;
 
-    public bool isPerformingAction = false;
-
-    public PlayerAnimationHandler AnimationHandler => animationHandler;
-    public PlayerNetworkManager PlayerNetworkManager => networkManager;
-    public PlayerMovement PlayerMovement => movement;
-
     public GroundCheck GroundCheck => groundCheck;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         DontDestroyOnLoad(gameObject);
 
-        movement = GetComponent<PlayerMovement>();
-        networkManager = GetComponent<PlayerNetworkManager>();
-        controller = GetComponent<CharacterController>();
-        animationHandler = GetComponent<PlayerAnimationHandler>();
-        combatManager = GetComponent<PlayerCombatManager>();
+        playerAnimationHandler = animationHandler as PlayerAnimationHandler;
+
+        health = GetComponent<PlayerHealth>();
         groundCheck = GetComponentInChildren<GroundCheck>();
+        movement = GetComponent<PlayerMovement>();
+        combatManager = GetComponent<PlayerCombatManager>();
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        DontDestroyOnLoad(this.gameObject);
+        movement.enabled = false;
+        SceneManager.activeSceneChanged += OnSceneChange;
+        //CheckpointManager.instance.AddPlayer(this);
+        //CheckpointManager.instance.MoveToCheckpoint(this);
+    }
+
+    private void OnSceneChange(Scene oldScene, Scene newScene)
+    {
+        Debug.Log("Change");
+        if (newScene.buildIndex != 0)
+        {
+            isActive = true;
+        }
+        else
+        {
+            isActive = false;
+        }
+    }
+
+    //protected virtual void Awake()
+    //{
+    //    DontDestroyOnLoad(gameObject);
+
+    //    movement = GetComponent<PlayerMovement>();
+    //    networkManager = GetComponent<PlayerNetworkManager>();
+    //    controller = GetComponent<CharacterController>();
+    //    animationHandler = GetComponent<PlayerAnimationHandler>();
+    //    combatManager = GetComponent<PlayerCombatManager>();
+    //    health = GetComponent<PlayerHealth>();
+    //    groundCheck = GetComponentInChildren<GroundCheck>();
+    //}
 
     protected virtual void OnEnable()
     {
         InputHandler.instance.onAttackPress += OnAttack;
         InputHandler.instance.onJumpPress += OnJump;
+        health.onTookDamage.AddListener(OnTookDamage);
+        health.onDied.AddListener(OnDied);
     }
+
+    
 
     protected virtual void OnDisable()
     {
         InputHandler.instance.onAttackPress -= OnAttack;
         InputHandler.instance.onJumpPress -= OnJump;
+        health.onTookDamage.RemoveListener(OnTookDamage);
+        health.onDied.RemoveListener(OnDied);
+
     }
 
     // Update is called once per frame
-    protected virtual void Update()
+    protected override void Update()
     {
-        if (IsOwner)
-        {
-            //Debug.Log(networkManager.NetworkPosition.Value != null);
-            networkManager.NetworkPosition.Value = transform.position;
-            networkManager.NetworkRotation.Value = transform.rotation;
-            networkManager.IsMoving.Value = movement.Velocity.magnitude > 0.1f;
-            networkManager.OnGround.Value = groundCheck.OnGround();
-        }
-        else
-        {
-            transform.position = Vector3.SmoothDamp(transform.position, networkManager.NetworkPosition.Value, ref networkManager.VelocityRef, networkManager.smoothTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, networkManager.NetworkRotation.Value, networkManager.rotSmoothTime);
-            animationHandler.SetMoveParameter(networkManager.IsMoving.Value);
-            animationHandler.SetGroundedParameter(networkManager.OnGround.Value);
-        }
-
+        base.Update();
         if (!IsOwner)
             return;
 
-        if (!isPerformingAction)
+        if (!isActive)
+            return;
+
+        if (!isPerformingAction && !isDead)
         {
             movement.HandleAllMovement();
 
@@ -83,13 +107,14 @@ public class Player : NetworkBehaviour
         }
     }
 
-    protected virtual void AnimateMovement()
+    protected override void AnimateMovement()
     {
+        base.AnimateMovement();
         bool moving = movement.Velocity.magnitude > 0.1f;
         bool onGround = groundCheck.OnGround();
 
-        animationHandler.SetMoveParameter(moving);
-        animationHandler.SetGroundedParameter(onGround);
+        playerAnimationHandler.SetMoveParameter(moving);
+        playerAnimationHandler.SetGroundedParameter(onGround);
     }
 
     public override void OnNetworkSpawn()
@@ -105,7 +130,7 @@ public class Player : NetworkBehaviour
 
     protected virtual void OnAttack()
     {
-        if (isPerformingAction || !groundCheck.OnGround())
+        if (isPerformingAction || !groundCheck.OnGround() || isDead)
             return;
         if (!IsOwner)
             return;
@@ -123,4 +148,24 @@ public class Player : NetworkBehaviour
 
         movement.Jump(groundCheck.OnGround());
     }
+
+    #region Health Events
+    private void OnTookDamage()
+    {
+        if (isDead) return;
+
+        combatManager.GetHit();
+    }
+
+    private void OnDied()
+    {
+        if (!IsOwner)
+            return;
+
+        if (isDead) return;
+
+        isDead = true;
+        playerAnimationHandler.SetDeadParam(isDead);
+    }
+    #endregion
 }

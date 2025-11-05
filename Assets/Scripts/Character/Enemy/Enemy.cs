@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : Character
 {
+    public bool isActive;
+
     [Header("Navigation")]
     [SerializeField] protected float stoppingDistance = 1.5f;
     [SerializeField] protected float pathUpdateRate = 0.5f;
@@ -10,6 +13,10 @@ public class Enemy : Character
     protected NavMeshPath path;
     protected int currentCorner = 0;
 
+    [Header("Names")]
+    [field: SerializeField] public string EnemyName { get; private set; }
+
+    Player[] players;
     Player target;
 
     Hitbox hitbox;
@@ -44,13 +51,38 @@ public class Enemy : Character
             return;
 
         if (target == null)
-            target = FindObjectOfType<Player>();
+            GetPlayerAsTarget();
 
         if (Vector3.Distance(target.transform.position, transform.position) <= stoppingDistance)
         {
-            movement.SetMoveDirection(Vector3.zero);
-            movement.HandleAllMovement();
+            StopMoving();
+            
+            if (!isPerformingAction)
+            {
+                combatManager.Attack();
+            }
             AnimateMovement();
+            return;
+        }
+
+        HandleMovement();
+
+        AnimateMovement();
+    }
+
+    void GetPlayerAsTarget()
+    {
+        players = FindObjectsByType<Player>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        int randomPlayer = UnityEngine.Random.Range(0, players.Length);
+
+        target = players[randomPlayer];
+    }
+
+    private void HandleMovement()
+    {
+        if (isDead || isPerformingAction)
+        {
+            StopMoving();
             return;
         }
 
@@ -64,8 +96,12 @@ public class Enemy : Character
 
         movement.SetMoveDirection(moveDir);
         movement.HandleAllMovement();
+    }
 
-        AnimateMovement();
+    private void StopMoving()
+    {
+        movement.Stop();
+        updateCounter = 0f;
     }
 
     protected void CalculatePath()
@@ -108,7 +144,8 @@ public class Enemy : Character
             if (isDead) return;
 
             Debug.Log("Took Damage");
-            animationHandler.PlayTargetAnimation("Hit");
+            //animationHandler.PlayTargetAnimation("Hit");
+            combatManager.GetHit();
         }
     }
 

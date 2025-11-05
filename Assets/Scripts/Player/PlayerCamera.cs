@@ -8,14 +8,15 @@ public class PlayerCamera : MonoBehaviour
     public static PlayerCamera instance;
 
     public Player player { get; set; }
+    LockOnCamera lockOnCam;
 
     [Header("Camera Follow")]
     [SerializeField] float cameraSmoothSpeed = 1f;
     Vector3 cameraVelocity;
 
     [Header("Camera Rotation")]
-    [SerializeField] float horiLookAngle;
-    [SerializeField] float vertLookAngle;
+    [SerializeField] public float horiLookAngle;
+    [SerializeField] public float vertLookAngle;
     [SerializeField] float horiLookSpeed = 220f;
     [SerializeField] float vertLookSpeed = 220f;
     [SerializeField] Transform camPivot;
@@ -26,6 +27,9 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] float camCollisionRad = 0.2f;
     [SerializeField] LayerMask collisionLayers;
+
+    [Header("Death")]
+    [SerializeField] float cameraDistanceWhileDead;
 
     Vector3 camPos;
     private float camStartZpos;
@@ -45,7 +49,7 @@ public class PlayerCamera : MonoBehaviour
             Destroy(gameObject);
         }
 
-        
+        lockOnCam = GetComponent<LockOnCamera>();
     }
 
     private void Start()
@@ -60,13 +64,28 @@ public class PlayerCamera : MonoBehaviour
 
     void HandleCameraActions()
     {
+        if (lockOnCam.lockedOn) return;
         if (!player) return;
-        FollowTarget();
-        HandleRotation();
-        HandleCollisions();
+        if (!player.isDead)
+        {
+            FollowTarget();
+            HandleRotation();
+            HandleCollisions();
+        }
+        else
+        {
+            // Lerp the camera's z position to the target position and pass it into the camera
+            camPos.z = Mathf.Lerp(cam.transform.localPosition.z, cameraDistanceWhileDead, 0.2f);
+            cam.transform.localPosition = camPos;
+
+            Vector3 cameraRotation = Vector3.zero;
+            cameraRotation.x = maxPivot;
+            Quaternion targetRotatiation = Quaternion.Euler(cameraRotation);
+            camPivot.localRotation = Quaternion.Slerp(camPivot.localRotation, targetRotatiation, 5f * Time.deltaTime);
+        }
     }
 
-    void FollowTarget()
+    public void FollowTarget()
     {
         Vector3 targetCamPos = Vector3.SmoothDamp(transform.position, player.transform.position, ref cameraVelocity, cameraSmoothSpeed * Time.deltaTime);
         transform.position = targetCamPos;
@@ -93,7 +112,7 @@ public class PlayerCamera : MonoBehaviour
         camPivot.localRotation = targetRotatiation;
     }
 
-    private void HandleCollisions()
+    public void HandleCollisions()
     {
         // Initialize where the camera wants to be and a raycast hit
         targetZPos = camStartZpos;
@@ -133,5 +152,17 @@ public class PlayerCamera : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(camPivot.position, camCollisionRad);
+    }
+
+    public void SetRotationValues()
+    {
+        horiLookAngle = transform.eulerAngles.y;
+        vertLookAngle = camPivot.localEulerAngles.x;
+
+        if (vertLookAngle > 180)
+        {
+            vertLookAngle -= 360f;
+        }
+
     }
 }

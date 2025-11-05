@@ -8,7 +8,7 @@ public class Hurtbox : MonoBehaviour
     {
         if (other.TryGetComponent(out Hitbox hitbox))
         {
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
             hitbox.TakeDamage(damage);
         }
     }

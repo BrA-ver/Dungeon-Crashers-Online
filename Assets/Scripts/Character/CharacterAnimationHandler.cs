@@ -1,18 +1,20 @@
 using UnityEngine;
 using Unity.Netcode;
 
-[RequireComponent(typeof(Animator))]
 public class CharacterAnimationHandler : MonoBehaviour
 {
-    protected Animator animator;
-    protected Character character;
+    [SerializeField] protected Animator animator;
+    protected Player player;
 
     int moveParam = Animator.StringToHash("moving");
 
     protected virtual void Awake()
     {
-        animator = GetComponent<Animator>();
-        character = GetComponent<Character>();
+        if (animator == null)
+        {
+            Debug.LogWarning($"WARNING: Animation Handler of {gameObject.name} has no animator.");
+        }
+        player = GetComponent<Player>();
     }
 
     public void SetMoveParameter(bool moving)
@@ -28,7 +30,7 @@ public class CharacterAnimationHandler : MonoBehaviour
     public void PlayTargetAnimation(string targetAnimaion)
     {
         animator.CrossFade(targetAnimaion, 0.1f);
-        if (character.IsOwner)
-            character.NetworkManager.NotifyTheServerOfActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimaion);
+        //if (player.IsOwner)
+            //player.MyNetworkManager.NotifyTheServerOfActionAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimaion);
     }
 }

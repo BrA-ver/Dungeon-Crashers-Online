@@ -1,19 +1,22 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : NetworkBehaviour
 {
-    public void StartNetworkAsHost()
-    {
-        NetworkManager.Singleton.StartHost();
-        SceneManager.LoadScene(1);
-    }
+    [SerializeField] Button hostButton, clientButton;
 
-    public void StartGameAsClient()
+    private void Start()
     {
-        NetworkManager.Singleton.Shutdown(); // Might not need this
+        hostButton.onClick.AddListener( () => 
+        {
+            NetworkManager.Singleton.StartHost();
+        });
 
-        NetworkManager.Singleton.StartClient();
+        clientButton.onClick.AddListener(() =>
+        {
+            NetworkManager.Singleton.StartClient();
+        });
     }
 }

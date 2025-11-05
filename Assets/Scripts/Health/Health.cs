@@ -8,6 +8,8 @@ public class Health : MonoBehaviour
     [SerializeField] protected int maxHealth = 10;
     [SerializeField] protected int currentHealth;
 
+    [Header("Events")]
+    public UnityEvent onTookDamage;
     public UnityEvent onDied;
 
     public float HealthRatio { get { return currentHealth / maxHealth; } }
@@ -24,13 +26,25 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    protected virtual void Update()
+    {
+        
+    }
+
     public virtual void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        if (!character.IsOwner)
+            return;
 
+        if (currentHealth <= 0) return;
+
+        currentHealth -= damage;
+        
         if (currentHealth <= 0)
         {
             onDied?.Invoke();
+            return;
         }
+        onTookDamage?.Invoke();
     }
 }

@@ -11,29 +11,30 @@ public class CharacterMovement : MonoBehaviour
     
 
     [Header("Movement")]
-    [SerializeField] float speed = 7f;
-    [SerializeField] float rotationSpeed = 10;
-    Vector3 moveDir;
-    Vector3 velocity;
-    Vector3 yVelocity;
+    [SerializeField] protected float speed = 7f;
+    [SerializeField] protected float rotationSpeed = 10;
+    protected Vector3 moveDir;
+    protected Vector3 velocity;
+    protected Vector3 yVelocity;
 
     [Header("Grivity")]
-    [SerializeField] float gravityScale;
+    [SerializeField] protected float gravityScale;
 
     [Header("Jump")]
-    [SerializeField] float jumpHeight = 5f;
+    [SerializeField] protected float jumpHeight = 5f;
 
     public Vector3 Velocity => velocity;
 
-    Vector3 dashVector;
-    float dashCounter;
+    protected Vector3 dashVector;
+    protected float dashCounter;
     public bool dashing;
 
-    bool onGround;
+    protected bool onGround;
 
     protected virtual void Awake()
     {
         controller = GetComponent<CharacterController>();
+        character = GetComponent<Character>();
     }
 
     public void SetMoveDirection(Vector3 direction)
@@ -50,7 +51,7 @@ public class CharacterMovement : MonoBehaviour
         AerialMovement();
     }
 
-    private void AerialMovement()
+    protected virtual void AerialMovement()
     {
         VerticalMovement(onGround);
     }
@@ -71,13 +72,13 @@ public class CharacterMovement : MonoBehaviour
         controller.Move(yVelocity * Time.deltaTime);
     }
 
-    void GroundMovement()
+    protected virtual void GroundMovement()
     {
         velocity = moveDir * speed;
         controller.Move(velocity * Time.deltaTime);
     }
 
-    void HandleRotation()
+    protected void HandleRotation()
     {
         if (moveDir.magnitude < 0.1f) return;
 
@@ -105,5 +106,11 @@ public class CharacterMovement : MonoBehaviour
         dashCounter = dashTime;
         dashVector = transform.forward * dashSpeed;
         dashing = true;
+    }
+
+    public void Stop()
+    {
+        moveDir = Vector3.zero;
+        velocity = Vector3.zero;
     }
 }
