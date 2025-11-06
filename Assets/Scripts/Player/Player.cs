@@ -8,11 +8,13 @@ public class Player : Character
 {
     bool isActive = true;
     protected PlayerAnimationHandler playerAnimationHandler;
+    protected PlayerMovement playerMovement;
     protected GroundCheck groundCheck;
 
     public CharacterController controller;
 
     public GroundCheck GroundCheck => groundCheck;
+    public PlayerMovement PlayerMovement => playerMovement;
 
     protected override void Awake()
     {
@@ -20,6 +22,8 @@ public class Player : Character
         DontDestroyOnLoad(gameObject);
 
         playerAnimationHandler = animationHandler as PlayerAnimationHandler;
+        playerMovement = movement as PlayerMovement;
+
 
         health = GetComponent<PlayerHealth>();
         groundCheck = GetComponentInChildren<GroundCheck>();
@@ -67,6 +71,7 @@ public class Player : Character
     {
         InputHandler.instance.onAttackPress += OnAttack;
         InputHandler.instance.onJumpPress += OnJump;
+        InputHandler.instance.onLockOnPressed += OnLockOn;
         health.onTookDamage.AddListener(OnTookDamage);
         health.onDied.AddListener(OnDied);
     }
@@ -77,10 +82,13 @@ public class Player : Character
     {
         InputHandler.instance.onAttackPress -= OnAttack;
         InputHandler.instance.onJumpPress -= OnJump;
+        InputHandler.instance.onLockOnPressed -= OnLockOn;
         health.onTookDamage.RemoveListener(OnTookDamage);
         health.onDied.RemoveListener(OnDied);
 
     }
+
+    
 
     // Update is called once per frame
     protected override void Update()
@@ -147,6 +155,23 @@ public class Player : Character
             return;
 
         movement.Jump(groundCheck.OnGround());
+    }
+
+    private void OnLockOn()
+    {
+        if (!IsOwner)
+            return;
+
+        bool lockedOn = PlayerCamera.instance.lockOnCam.lockedOn;
+
+        if (lockedOn)
+        {
+            PlayerCamera.instance.lockOnCam.StopLockOn();
+        }
+        else
+        {
+            PlayerCamera.instance.lockOnCam.LockOn();
+        }
     }
 
     #region Health Events

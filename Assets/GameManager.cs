@@ -22,11 +22,6 @@ public class GameManager : MonoBehaviour
         NetworkManager.Singleton.OnServerStarted += OnServerStated;
     }
 
-    private void OnDisable()
-    {
-        NetworkManager.Singleton.OnServerStarted -= OnServerStated;   
-    }
-
     private void OnServerStated()
     {
         networkStarted = true;

@@ -6,6 +6,16 @@ public class PlayerMovement : CharacterMovement
     Player player;
     protected Vector2 moveInput;
 
+    public Vector3 MoveDirection
+    {
+        get
+        {
+            GetMoveInput();
+            GetMoveDirection();
+            return moveDir;
+        }
+    }
+
 
     protected override void Awake()
     {
@@ -30,7 +40,7 @@ public class PlayerMovement : CharacterMovement
         moveInput = InputHandler.instance.MoveInput;
     }
 
-    private void GetMoveDirection()
+    public void GetMoveDirection()
     {
         moveDir = PlayerCamera.instance.transform.forward * moveInput.y;
         moveDir += PlayerCamera.instance.transform.right * moveInput.x;

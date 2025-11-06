@@ -8,7 +8,7 @@ public class PlayerCamera : MonoBehaviour
     public static PlayerCamera instance;
 
     public Player player { get; set; }
-    LockOnCamera lockOnCam;
+    public LockOnCamera lockOnCam;
 
     [Header("Camera Follow")]
     [SerializeField] float cameraSmoothSpeed = 1f;

@@ -12,6 +12,7 @@ public class InputHandler : MonoBehaviour
 
     public event Action onAttackPress;
     public event Action onJumpPress;
+    public event Action onLockOnPressed;
 
     int sceneIndex;
     bool ignoreInput = false;
@@ -99,5 +100,16 @@ public class InputHandler : MonoBehaviour
 
         if (context.performed)
             onJumpPress?.Invoke();
+    }
+
+    public void OnLockOn(InputAction.CallbackContext context)
+    {
+        if (ignoreInput) return;
+
+        if (context.performed)
+        {
+            onLockOnPressed?.Invoke();
+            Debug.Log("Lock On Pressed");
+        }
     }
 }

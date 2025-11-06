@@ -46,7 +46,7 @@ public class CharacterMovement : MonoBehaviour
     {
         // Ground Movement
         GroundMovement();
-        HandleRotation();
+        HandleRotation(moveDir);
         // Aerial Movement
         AerialMovement();
     }
@@ -78,11 +78,11 @@ public class CharacterMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    protected void HandleRotation()
+    public void HandleRotation(Vector3 lookDir)
     {
-        if (moveDir.magnitude < 0.1f) return;
+        if (lookDir.magnitude < 0.1f) return;
 
-        Quaternion lookRotation = Quaternion.LookRotation(moveDir);
+        Quaternion lookRotation = Quaternion.LookRotation(lookDir);
         Quaternion rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
         transform.rotation = rotation;
     }

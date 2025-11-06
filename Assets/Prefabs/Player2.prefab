@@ -1254,6 +1254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e7e24a0b8fe374faacee0fe8a09bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 7761280731244035904}
 --- !u!114 &3053086605330044033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1284,6 +1285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCombo: []
   comboReset: 1
+  rotationSpeed: 12
   bullet: {fileID: 6145985284389453046, guid: 62a89cf815874264e92128b799028906, type: 3}
   shootSpeed: 25
   bulletSpawn: {fileID: 2450465074968343362}
