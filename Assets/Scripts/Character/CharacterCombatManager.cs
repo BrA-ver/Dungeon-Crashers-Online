@@ -37,4 +37,10 @@ public class CharacterCombatManager : MonoBehaviour
     {
         character.isPerformingAction = false;
     }
+
+    public void Taunt()
+    {
+        character.isPerformingAction = true;
+        character.AnimationHandler.PlayTargetAnimation("Taunt");
+    }
 }

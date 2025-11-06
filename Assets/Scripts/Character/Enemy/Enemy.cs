@@ -16,8 +16,8 @@ public class Enemy : Character
     [Header("Names")]
     [field: SerializeField] public string EnemyName { get; private set; }
 
-    Player[] players;
-    Player target;
+    protected Player[] players;
+    protected Player target;
 
     Hitbox hitbox;
 
@@ -70,7 +70,7 @@ public class Enemy : Character
         AnimateMovement();
     }
 
-    void GetPlayerAsTarget()
+    protected void GetPlayerAsTarget()
     {
         players = FindObjectsByType<Player>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         int randomPlayer = UnityEngine.Random.Range(0, players.Length);
@@ -78,7 +78,7 @@ public class Enemy : Character
         target = players[randomPlayer];
     }
 
-    private void HandleMovement()
+    protected virtual void HandleMovement()
     {
         if (isDead || isPerformingAction)
         {
@@ -98,7 +98,7 @@ public class Enemy : Character
         movement.HandleAllMovement();
     }
 
-    private void StopMoving()
+    protected void StopMoving()
     {
         movement.Stop();
         updateCounter = 0f;
@@ -137,7 +137,7 @@ public class Enemy : Character
         return dir;
     }
 
-    void OnTookDamage()
+    protected virtual void OnTookDamage()
     {
         if (IsOwner)
         {
@@ -149,7 +149,7 @@ public class Enemy : Character
         }
     }
 
-    void OnDied()
+    protected virtual void OnDied()
     {
         if (IsOwner)
         {
