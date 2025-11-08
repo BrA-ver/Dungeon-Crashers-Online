@@ -12,7 +12,7 @@ public class Health : MonoBehaviour
     public UnityEvent onTookDamage;
     public UnityEvent onDied;
 
-    public float HealthRatio { get { return currentHealth / maxHealth; } }
+    public float HealthRatio { get { return (float)currentHealth / (float)maxHealth; } }
     public int CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
     public int MaxHealth { get { return maxHealth; } set { maxHealth = value; } }
 
@@ -42,6 +42,7 @@ public class Health : MonoBehaviour
         
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             onDied?.Invoke();
             return;
         }

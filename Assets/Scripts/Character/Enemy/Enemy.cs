@@ -98,7 +98,7 @@ public class Enemy : Character
         movement.HandleAllMovement();
     }
 
-    protected void StopMoving()
+    public void StopMoving()
     {
         movement.Stop();
         updateCounter = 0f;

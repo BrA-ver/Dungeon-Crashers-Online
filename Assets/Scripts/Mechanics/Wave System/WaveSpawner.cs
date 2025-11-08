@@ -16,6 +16,12 @@ public class WaveSpawner : NetworkBehaviour
 
     [SerializeField] Button startWaveButton;
 
+    public event Action onBattleStarted;
+    public event Action onBattleEnded;
+    public event Action onHideDisplay;
+
+    bool first = true;
+
     private void Awake()
     {
         instance = this;
@@ -45,9 +51,10 @@ public class WaveSpawner : NetworkBehaviour
         if (!IsServer)
             return;
 
-        if (currentWave >= waves.Count) return;
+        
 
-        StartWaveServerRpc();
+        StartCoroutine(StartBattleRoutine());
+        
     }
 
     [ServerRpc]
@@ -75,11 +82,42 @@ public class WaveSpawner : NetworkBehaviour
         currentWave++;
         if (currentWave >= waves.Count)
         {
-            Debug.Log("Batlle Over");
+            StartCoroutine(EndBattleRoutine());
             return;
         }
 
         // Start the next wave
         StartWave();
+    }
+
+    IEnumerator StartBattleRoutine()
+    {
+        if (first)
+            onBattleStarted?.Invoke();
+        first = false;
+
+        yield return new WaitForSeconds(1f);
+
+        onHideDisplay?.Invoke();
+
+        yield return new WaitForSeconds(1f);
+
+        
+
+        if (currentWave >= waves.Count) 
+            yield return null;
+
+        StartWaveServerRpc();
+        
+    }
+
+    IEnumerator EndBattleRoutine()
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Batlle Over");
+        onBattleEnded?.Invoke();
+
+        yield return new WaitForSeconds(2f);
+        onHideDisplay?.Invoke();
     }
 }

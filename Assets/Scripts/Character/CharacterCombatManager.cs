@@ -22,6 +22,11 @@ public class CharacterCombatManager : MonoBehaviour
         character.AnimationHandler.PlayTargetAnimation(attackAnim);
     }
 
+    public virtual void AttackDash()
+    {
+
+    }
+
     public void GetHit()
     {
         character.isPerformingAction = true;
@@ -43,4 +48,12 @@ public class CharacterCombatManager : MonoBehaviour
         character.isPerformingAction = true;
         character.AnimationHandler.PlayTargetAnimation("Taunt");
     }
+}
+
+[System.Serializable]
+public class Attack
+{
+    public string animName;
+    public float dashSpeed;
+    public float duration;
 }

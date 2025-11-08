@@ -104,10 +104,3 @@ public class PlayerCombatManager : CharacterCombatManager
     }
 }
 
-[System.Serializable]
-public class Attack
-{
-    public string animName;
-    public float dashSpeed;
-    public float duration;
-}

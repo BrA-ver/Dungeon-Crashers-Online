@@ -6,7 +6,7 @@ using Unity.Netcode;
 
 public class Wave : NetworkBehaviour
 {
-    [SerializeField] List<EnemySpawner> spawners = new List<EnemySpawner>();
+    [SerializeField] protected List<EnemySpawner> spawners = new List<EnemySpawner>();
     public List<Enemy> enemies = new List<Enemy>();
     public event Action<string, string> onWaveStared;
     public event Action onEnemiesEnabled;
@@ -15,7 +15,7 @@ public class Wave : NetworkBehaviour
     public string WaveName = string.Empty;
     public string enemyNames = string.Empty;
 
-    [SerializeField] float waveStartTime = 3f;
+    [SerializeField] protected float waveStartTime = 3f;
 
     int deadEnemyNum = 0;
 
@@ -47,14 +47,14 @@ public class Wave : NetworkBehaviour
     //    }
     //}
 
-    public void StartWave()
+    public virtual void StartWave()
     {
         if (!IsServer)
             return;
         StartCoroutine(StartWaveRoutine());
     }
 
-    void OnEnemyDied()
+    protected void OnEnemyDied()
     {
         deadEnemyNum++;
         bool allEnemiesDead = deadEnemyNum >= enemies.Count;
@@ -65,7 +65,7 @@ public class Wave : NetworkBehaviour
         }
     }
 
-    IEnumerator StartWaveRoutine()
+    protected virtual IEnumerator StartWaveRoutine()
     {
         Debug.Log("Wave Routine");
         // 1. Disable Player Controls
@@ -103,19 +103,21 @@ public class Wave : NetworkBehaviour
     }
 
     [ClientRpc]
-    void InvokeWaveStartedClientRpc(string waveName, string enemyNames)
+    protected void InvokeWaveStartedClientRpc(string waveName, string enemyNames)
     {
         onWaveStared?.Invoke(waveName, enemyNames);
     }
 
     [ClientRpc]
-    void InvokeEnemiesEnabledClientRpc()
+    protected void InvokeEnemiesEnabledClientRpc()
     {
         onEnemiesEnabled?.Invoke();
     }
 
-    IEnumerator EndWaveRoutine()
+    protected virtual IEnumerator EndWaveRoutine()
     {
+        yield return new WaitForSeconds(2f);
+
         foreach (Enemy enemy in enemies)
         {
             Destroy(enemy.gameObject);

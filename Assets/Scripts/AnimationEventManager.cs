@@ -13,4 +13,9 @@ public class AnimationEventManager : MonoBehaviour
     {
         combatManager.RecoverFromHit();
     }
+
+    public void Dash()
+    {
+        combatManager.AttackDash();
+    }
 }

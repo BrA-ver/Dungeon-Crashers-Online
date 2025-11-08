@@ -15,6 +15,7 @@ public class Character : NetworkBehaviour
     public CharacterMovement Movement => movement;
     public CharacterAnimationHandler AnimationHandler => animationHandler;
     public Health Health => health;
+    public CharacterCombatManager CombatManager => combatManager;
 
 
     protected virtual void Awake()

@@ -4,6 +4,7 @@ public class EnemyCombatManager : CharacterCombatManager
 {
     [Header("Enemy Attack")]
     [SerializeField] EnemyAttack[] enemyAttacks;
+    protected EnemyAttack currentAttack;
     int totalWeight;
 
     protected override void Start()
@@ -27,7 +28,8 @@ public class EnemyCombatManager : CharacterCombatManager
 
             if (randomWeight <= temp)
             {
-                attackAnim = attack.attackName;
+                attackAnim = attack.animName;
+                currentAttack = attack;
                 break;
             }
         }
@@ -37,8 +39,8 @@ public class EnemyCombatManager : CharacterCombatManager
 }
 
 [System.Serializable]
-public class EnemyAttack
+public class EnemyAttack: Attack
 {
-    public string attackName;
+    [Header("Enemy")]
     public int weight;
 }
