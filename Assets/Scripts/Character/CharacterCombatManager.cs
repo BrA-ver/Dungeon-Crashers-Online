@@ -48,6 +48,16 @@ public class CharacterCombatManager : MonoBehaviour
         character.isPerformingAction = true;
         character.AnimationHandler.PlayTargetAnimation("Taunt");
     }
+
+    public virtual void StartRotation()
+    {
+
+    }
+    
+    public virtual void StopRotation()
+    {
+
+    }
 }
 
 [System.Serializable]

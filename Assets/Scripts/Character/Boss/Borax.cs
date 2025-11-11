@@ -139,6 +139,7 @@ public class Borax : Boss
         hitCount++;
         if (hitCount >= poise)
         {
+            Player attacker = health.attacker.GetComponent<Player>();
             stateMachine.SwitchState(new BoraxStunnedState(stateMachine, this));
             isStunned = true;
         }

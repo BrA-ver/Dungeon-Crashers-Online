@@ -5,6 +5,7 @@ public class Hitbox : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] Health health;
+    [SerializeField] Character attacker;
 
     [Header("Collisions")]
     [SerializeField] DamageFlash[] flashs;
@@ -18,6 +19,6 @@ public class Hitbox : MonoBehaviour
             flash.Flash();
         }
         OnTookDamage?.Invoke();
-        health.TakeDamage(damage);
+        health.TakeDamage(damage, attacker);
     }
 }

@@ -21,6 +21,8 @@ public class Enemy : Character
 
     Hitbox hitbox;
 
+    public Player Target => target;
+
     protected override void Awake()
     {
         base.Awake();

@@ -7,6 +7,18 @@ public class EnemyCombatManager : CharacterCombatManager
     protected EnemyAttack currentAttack;
     int totalWeight;
 
+    [SerializeField] float rotationSpeed = 6f;
+
+    bool canRotate;
+
+    Enemy enemy;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        enemy = character as Enemy;
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -14,6 +26,31 @@ public class EnemyCombatManager : CharacterCombatManager
         {
             totalWeight += attack.weight;
         }
+    }
+
+    private void Update()
+    {
+        if (canRotate)
+        {
+            Player target = enemy.Target;
+
+            Vector3 lookDir = target.transform.position - transform.position;
+            lookDir.y = 0f;
+            lookDir.Normalize();
+            lookDir.y = 0f;
+            lookDir.Normalize();
+
+            HandleRotation(lookDir);
+        }
+    }
+
+    public void HandleRotation(Vector3 lookDir)
+    {
+        if (lookDir.magnitude < 0.1f) return;
+
+        Quaternion lookRotation = Quaternion.LookRotation(lookDir);
+        Quaternion rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+        transform.rotation = rotation;
     }
 
     public override void Attack()
@@ -35,6 +72,16 @@ public class EnemyCombatManager : CharacterCombatManager
         }
 
         base.Attack();
+    }
+
+    public override void StartRotation()
+    {
+        canRotate = true;
+    }
+
+    public override void StopRotation()
+    {
+        canRotate = false;
     }
 }
 

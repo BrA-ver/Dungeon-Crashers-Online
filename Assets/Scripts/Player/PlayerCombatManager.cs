@@ -90,15 +90,17 @@ public class PlayerCombatManager : CharacterCombatManager
 
     public void AttackDash()
     {
+        if (!player.IsOwner)
+            return;
         player.Movement.Dash(currentAttack.dashSpeed, currentAttack.duration);
     }
 
-    public void StartRotation()
+    public override void StartRotation()
     {
         canRotate = true;
     }
 
-    public void StopRotation()
+    public override void StopRotation()
     {
         canRotate = false;
     }

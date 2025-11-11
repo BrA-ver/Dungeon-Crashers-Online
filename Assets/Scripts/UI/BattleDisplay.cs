@@ -1,26 +1,32 @@
 using UnityEngine;
 using TMPro;
+using Unity.Netcode;
 
-public class BattleDisplay : MonoBehaviour
+public class BattleDisplay : NetworkBehaviour
 {
     WaveSpawner spawner;
 
     [SerializeField] GameObject displayHolder;
     [SerializeField] TextMeshProUGUI battleText;
 
-    private void Start()
+    private void OnDisable()
     {
-        spawner = WaveSpawner.instance;
+        if (spawner != null)
+        {
+            spawner.onBattleStarted -= OnBattleStarted;
+            spawner.onBattleEnded -= OnBattleEnded;
+            spawner.onHideDisplay -= OnHideDisplay;
+        }
+    }
+
+    public void GetWaveSpawner(WaveSpawner spawner)
+    {
+
+        Debug.Log("Got Spawner");
+        this.spawner = spawner;
         spawner.onBattleStarted += OnBattleStarted;
         spawner.onBattleEnded += OnBattleEnded;
         spawner.onHideDisplay += OnHideDisplay;
-    }
-
-    private void OnDisable()
-    {
-        spawner.onBattleStarted -= OnBattleStarted;
-        spawner.onBattleEnded -= OnBattleEnded;
-        spawner.onHideDisplay -= OnHideDisplay;
     }
 
     private void OnBattleStarted()

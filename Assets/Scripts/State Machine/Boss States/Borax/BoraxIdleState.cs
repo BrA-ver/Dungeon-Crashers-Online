@@ -9,13 +9,13 @@ public class BoraxIdleState : BoraxState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Borax Idle Enter");
+        //Debug.Log("Borax Idle Enter");
     }
 
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        Debug.Log("Borax Idle Tick");
+        //Debug.Log("Borax Idle Tick");
 
         if (borax.isPerformingAction)
             return;
@@ -25,13 +25,13 @@ public class BoraxIdleState : BoraxState
 
         if (borax.IsTargetInAttackDistance())
         {
-            Debug.Log("Borax Attack");
+            //Debug.Log("Borax Attack");
             stateMachine.SwitchState(new BoraxAttackState(stateMachine, borax));
             return;
         }
         else
         {
-            Debug.Log("Not In Attack Distance");
+            //Debug.Log("Not In Attack Distance");
             // Move Towards Target
             stateMachine.SwitchState(new BoraxChaseState(stateMachine, borax));
         }
@@ -40,7 +40,7 @@ public class BoraxIdleState : BoraxState
     public override void Exit()
     {
         base.Exit();
-        Debug.Log("Borax Idle Exit");
+        //Debug.Log("Borax Idle Exit");
     }
 
     

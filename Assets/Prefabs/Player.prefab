@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 8876445104758210219}
+  attacker: {fileID: 0}
   flashs: []
   OnTookDamage:
     m_PersistentCalls:
@@ -914,7 +915,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -934,7 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d812918c6e4360a488bfad2f08ca9798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 10
 --- !u!1 &2452466590087904173
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,7 +2235,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   isDead: 0
   isPerformingAction: 0
-  controller: {fileID: 0}
+  controller: {fileID: 8154064779629781857}
 --- !u!95 &6368788177977115709
 Animator:
   serializedVersion: 7
@@ -2306,8 +2307,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4bf326f1e9447d4588f89e1d0d9c231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHealth: 150
   currentHealth: 0
+  attacker: {fileID: 0}
+  NetMaxHealth:
+    m_InternalValue: 10
+  NetCurrentHealth:
+    m_InternalValue: 0
+  NetHealthRatio:
+    m_InternalValue: 1
   onTookDamage:
     m_PersistentCalls:
       m_Calls: []

@@ -26,6 +26,7 @@ public class BoraxStunnedState : BoraxState
             stateMachine.SwitchState(new BoraxIdleState(stateMachine, borax));
             borax.animator.CrossFade("Get Up", 0.1f);
             borax.isStunned = false;
+            borax.hitCount = 0;
         }
     }
 }

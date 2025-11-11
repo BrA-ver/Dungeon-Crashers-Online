@@ -2331,7 +2331,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAttacks:
-  - attackName: Attack_Spellcast
+  - animName: Attack_Spellcast
+    dashSpeed: 0
+    duration: 0
     weight: 1
 --- !u!1 &7154223775884735120
 GameObject:

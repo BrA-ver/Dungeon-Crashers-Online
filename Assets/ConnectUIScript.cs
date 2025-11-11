@@ -82,7 +82,7 @@ public class ConnectUIScript : MonoBehaviour
 
     private void BeginOnline()
     {
-        const string targetScene = "Arena";
+        const string targetScene = "World";
 
         int buildIndex = SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/" + targetScene + ".unity");
         Debug.Log($"Loading {targetScene}, Build Index: {buildIndex}");

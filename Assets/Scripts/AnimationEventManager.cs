@@ -18,4 +18,14 @@ public class AnimationEventManager : MonoBehaviour
     {
         combatManager.AttackDash();
     }
+
+    public void StartRotation()
+    {
+        combatManager.StartRotation();
+    }
+    
+    public void StopRotation()
+    {
+        combatManager.StopRotation();
+    }
 }

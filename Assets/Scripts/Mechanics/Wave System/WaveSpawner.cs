@@ -34,25 +34,23 @@ public class WaveSpawner : NetworkBehaviour
                 wave.onWaveEnded += OnWaveEnded;
             }
         }
+
+        UIManager.instance.WaveDisplay.GetWaves(waves);
     }
 
     // Initialize waves in start because the waves initialize enemies in awake
     private void Start()
     {
-        
-
         startWaveButton.onClick.AddListener(StartWave);
+        UIManager.instance.BattleDisplay.GetWaveSpawner(this);
 
         //StartWave();
     }
 
-    void StartWave()
+    public void StartWave()
     {
         if (!IsServer)
             return;
-
-        
-
         StartCoroutine(StartBattleRoutine());
         
     }
@@ -93,12 +91,12 @@ public class WaveSpawner : NetworkBehaviour
     IEnumerator StartBattleRoutine()
     {
         if (first)
-            onBattleStarted?.Invoke();
+            StartBattleClientRpc();
         first = false;
 
         yield return new WaitForSeconds(1f);
 
-        onHideDisplay?.Invoke();
+        HideDisplayClientRpc();
 
         yield return new WaitForSeconds(1f);
 
@@ -115,9 +113,27 @@ public class WaveSpawner : NetworkBehaviour
     {
         yield return new WaitForSeconds(1f);
         Debug.Log("Batlle Over");
-        onBattleEnded?.Invoke();
+        EndBattleClientRpc();
 
         yield return new WaitForSeconds(2f);
+        HideDisplayClientRpc();
+    }
+
+    [ClientRpc]
+    void StartBattleClientRpc()
+    {
+        onBattleStarted?.Invoke();
+    }
+
+    [ClientRpc]
+    void HideDisplayClientRpc()
+    {
         onHideDisplay?.Invoke();
+    }
+
+    [ClientRpc]
+    void EndBattleClientRpc()
+    {
+        onBattleEnded?.Invoke();
     }
 }

@@ -333,13 +333,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAttacks:
-  - attackName: Attack_Stab
+  - animName: Attack_Chop
+    dashSpeed: 0
+    duration: 0
     weight: 20
-  - attackName: Attack_Chop
+  - animName: Attack_Spin
+    dashSpeed: 0
+    duration: 0
     weight: 15
-  - attackName: Attack_Spin
+  - animName: Attack_Stab
+    dashSpeed: 0
+    duration: 0
     weight: 10
-  - attackName: Attack_Kick
+  - animName: Attack_Kick
+    dashSpeed: 0
+    duration: 0
     weight: 5
 --- !u!114 &5878637856575289058
 MonoBehaviour:

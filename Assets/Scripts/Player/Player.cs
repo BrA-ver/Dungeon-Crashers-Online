@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : Character
 {
-    bool isActive = true;
+    protected bool isActive = true;
     protected PlayerAnimationHandler playerAnimationHandler;
     protected PlayerMovement playerMovement;
     protected GroundCheck groundCheck;
@@ -35,10 +35,16 @@ public class Player : Character
     {
         base.Start();
         DontDestroyOnLoad(this.gameObject);
-        movement.enabled = false;
+        //movement.enabled = false;
         SceneManager.activeSceneChanged += OnSceneChange;
+
         //CheckpointManager.instance.AddPlayer(this);
         //CheckpointManager.instance.MoveToCheckpoint(this);
+
+        if (IsOwner)
+            UIManager.instance.playerHealthBar.GetPlayer(this);
+
+        GameManager.instance.AddPlayer(this);
     }
 
     private void OnSceneChange(Scene oldScene, Scene newScene)

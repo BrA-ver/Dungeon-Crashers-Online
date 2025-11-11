@@ -16,12 +16,12 @@ public class PlayerHealth : Health
         }
     }
 
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(int damage, Character attacker)
     {
         if (invincibilityCounter > 0)
             return;
         //Debug.Log("Player Hit");
         invincibilityCounter = invincibilityTime;
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, attacker);
     }
 }

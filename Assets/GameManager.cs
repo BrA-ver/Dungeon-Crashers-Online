@@ -1,11 +1,19 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
 
     public bool networkStarted;
+
+    //NetworkVariable<List<Player>> activePlayers = new NetworkVariable<List<Player>>(
+    //    new List<Player>(), 
+    //    NetworkVariableReadPermission.Everyone, 
+    //    NetworkVariableWritePermission.Owner);
+
+    public List<Player> players = new List<Player>();
 
     private void Awake()
     {
@@ -25,5 +33,11 @@ public class GameManager : MonoBehaviour
     private void OnServerStated()
     {
         networkStarted = true;
+    }
+
+    public void AddPlayer(Player player)
+    {
+        players.Add(player);
+        //activePlayers.Value = players;
     }
 }

@@ -15,13 +15,33 @@ public class BossHealthBar : MonoBehaviour
     {
         health = boss.Health;
         health.onTookDamage.AddListener(OnBossTookDamage);
-        health.onDied.AddListener(OnBossTookDamage);
+        health.onDied.AddListener(OnBossDied);
 
         nameText.text = boss.EnemyName;
     }
 
+    
+
     private void OnBossTookDamage()
     {
+        Debug.Log("Health Bar Change");
+        Debug.Log(health.NetHealthRatio.Value);
         healthSlider.value = health.HealthRatio;
+    }
+
+    private void OnBossDied()
+    {
+        Debug.Log(health.NetHealthRatio.Value);
+        healthSlider.value = health.HealthRatio;
+
+        Invoke(nameof(DeleteHealthBar), 1f);
+    }
+
+    private void DeleteHealthBar()
+    {
+        health.onTookDamage.RemoveListener(OnBossTookDamage);
+        health.onDied.RemoveListener(OnBossDied);
+
+        Destroy(gameObject);
     }
 }

@@ -7,14 +7,30 @@ public class UIManager : NetworkBehaviour
 {
     public static UIManager instance;
 
+    [SerializeField] BattleDisplay battleDisplay;
+    [SerializeField] WaveDisplay waveDisplay;
+
     [SerializeField] Button hostButton, clientButton;
 
     [SerializeField] RectTransform healthBarHolder;
     [SerializeField] BossHealthBar healthBar;
 
+    public PlayerHealthBar playerHealthBar;
+
+    public BattleDisplay BattleDisplay => battleDisplay;
+    public WaveDisplay WaveDisplay => waveDisplay;
+
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -28,6 +44,8 @@ public class UIManager : NetworkBehaviour
         {
             NetworkManager.Singleton.StartClient();
         });
+
+        battleDisplay = GetComponentInChildren<BattleDisplay>();
     }
 
     public void ShowBossHealth(Boss boss)

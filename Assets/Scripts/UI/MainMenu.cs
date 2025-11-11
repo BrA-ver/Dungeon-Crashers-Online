@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Host started: " + started);
         if (started)
         {
-            NetworkManager.Singleton.SceneManager.LoadScene("Arena", LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene("World", LoadSceneMode.Single);
         }
     }
 

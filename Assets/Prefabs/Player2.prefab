@@ -1270,7 +1270,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   isDead: 0
   isPerformingAction: 0
-  controller: {fileID: 0}
+  controller: {fileID: 8257191330589477196}
 --- !u!114 &6425167402572586021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1301,8 +1301,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4bf326f1e9447d4588f89e1d0d9c231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHealth: 150
   currentHealth: 0
+  NetMaxHealth:
+    m_InternalValue: 10
+  NetCurrentHealth:
+    m_InternalValue: 0
+  NetHealthRatio:
+    m_InternalValue: 1
   onTookDamage:
     m_PersistentCalls:
       m_Calls: []
