@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : Character
 {
-    protected bool isActive = true;
+    protected PlayerCombatManager playerCombat;
+
+    protected bool isActive = false;
     protected PlayerAnimationHandler playerAnimationHandler;
     protected PlayerMovement playerMovement;
     protected GroundCheck groundCheck;
@@ -28,7 +30,7 @@ public class Player : Character
         health = GetComponent<PlayerHealth>();
         groundCheck = GetComponentInChildren<GroundCheck>();
         movement = GetComponent<PlayerMovement>();
-        combatManager = GetComponent<PlayerCombatManager>();
+        playerCombat = combatManager as PlayerCombatManager;
     }
 
     protected override void Start()
@@ -78,8 +80,11 @@ public class Player : Character
         InputHandler.instance.onAttackPress += OnAttack;
         InputHandler.instance.onJumpPress += OnJump;
         InputHandler.instance.onLockOnPressed += OnLockOn;
+        InputHandler.instance.onDodgePressed += OnDodge;
+
         health.onTookDamage.AddListener(OnTookDamage);
         health.onDied.AddListener(OnDied);
+        health.onRevived.AddListener(OnRevived);
     }
 
     
@@ -144,10 +149,17 @@ public class Player : Character
 
     protected virtual void OnAttack()
     {
-        if (isPerformingAction || !groundCheck.OnGround() || isDead)
-            return;
         if (!IsOwner)
             return;
+        //if (isDead)
+        //{
+        //    GameManager.instance.ReviveAllPlayers();
+        //    playerAnimationHandler.SetDeadParam(false);
+        //    return;
+        //}
+        if (isPerformingAction || !groundCheck.OnGround() || isDead)
+            return;
+        
 
         isPerformingAction = true;
         combatManager.Attack();
@@ -180,6 +192,14 @@ public class Player : Character
         }
     }
 
+    private void OnDodge()
+    {
+        if (!IsOwner)
+            return;
+
+        playerCombat.Dodge();
+    }
+
     #region Health Events
     private void OnTookDamage()
     {
@@ -197,6 +217,16 @@ public class Player : Character
 
         isDead = true;
         playerAnimationHandler.SetDeadParam(isDead);
+    }
+
+    private void OnRevived()
+    {
+        if (!IsOwner)
+            return;
+
+        isDead = false;
+        isPerformingAction = false;
+        playerAnimationHandler.PlayTargetAnimation("Idle");
     }
     #endregion
 }

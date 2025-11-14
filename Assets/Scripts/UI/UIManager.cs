@@ -15,6 +15,8 @@ public class UIManager : NetworkBehaviour
     [SerializeField] RectTransform healthBarHolder;
     [SerializeField] BossHealthBar healthBar;
 
+    public Image lockOnImage;
+
     public PlayerHealthBar playerHealthBar;
 
     public BattleDisplay BattleDisplay => battleDisplay;

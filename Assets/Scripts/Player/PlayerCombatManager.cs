@@ -17,6 +17,11 @@ public class PlayerCombatManager : CharacterCombatManager
 
     [SerializeField] float rotationSpeed = 12f;
 
+    [SerializeField] float dodgeSpeed = 10f;
+    [SerializeField] float dodgeTime = 1f;
+    float dodgeCounter;
+    bool dodging;
+
     protected override void Awake()
     {
         base.Awake();
@@ -56,6 +61,15 @@ public class PlayerCombatManager : CharacterCombatManager
                 HandleRotation(moveDir);
             }
         }
+
+        if (dodging)
+        {
+            if (!player.Movement.dashing)
+            {
+                player.isPerformingAction = false;
+                dodging = false;
+            }
+        }
     }
 
     public void HandleRotation(Vector3 lookDir)
@@ -92,9 +106,22 @@ public class PlayerCombatManager : CharacterCombatManager
     {
         if (!player.IsOwner)
             return;
+
         player.Movement.Dash(currentAttack.dashSpeed, currentAttack.duration);
     }
 
+    public void Dodge()
+    {
+        if (!player.IsOwner)
+            return;
+
+        player.isPerformingAction = true;
+        
+        player.Movement.Dash(dodgeSpeed, dodgeTime);
+        player.AnimationHandler.PlayTargetAnimation("Dodge");
+        dodging = true;
+        Debug.Log("Dodge");
+    }
     public override void StartRotation()
     {
         canRotate = true;

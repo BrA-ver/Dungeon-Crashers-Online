@@ -40,10 +40,23 @@ public class LockOnCamera : MonoBehaviour
         if (!lockedOn)
             return;
 
+        if (!target.gameObject.activeInHierarchy)
+        {
+            Debug.Log("Target Is Gone");
+        }
+
         LookAtTarget();
         cam.FollowTarget();
         cam.HandleCollisions();
         CheckForScreenExit();
+    }
+
+    private void OnDisable()
+    {
+        if (target != null)
+        {
+            target.destroyed.RemoveListener(StopLockOn);
+        }
     }
 
     private void LookAtTarget()
@@ -62,9 +75,9 @@ public class LockOnCamera : MonoBehaviour
 
         if (xRot > 180f) xRot -= 360f;
 
-        Debug.Log(xRot);
+        //Debug.Log(xRot);
         xRot = Mathf.Clamp(xRot, minPivot, maxPivot);
-        Debug.Log(xRot + " After");
+        //Debug.Log(xRot + " After");
         lookRotation = Quaternion.Euler(xRot, lookRotation.eulerAngles.y, lookRotation.eulerAngles.z);
         camPivot.rotation = Quaternion.Slerp(camPivot.rotation, lookRotation, pivotRotationSpeed * Time.deltaTime);
 
@@ -73,11 +86,11 @@ public class LockOnCamera : MonoBehaviour
     void CheckForScreenExit()
     {
         Vector3 targetScreenPos = Camera.main.WorldToScreenPoint(target.transform.position);
-        screenPosImage.rectTransform.position = targetScreenPos;
-        Debug.Log("Screen Pos: " + targetScreenPos);
+        UIManager.instance.lockOnImage.rectTransform.position = targetScreenPos;
+        //Debug.Log("Screen Pos: " + targetScreenPos);
 
-        Debug.Log("Width: " + Screen.width);
-        Debug.Log("Hieght: "+  Screen.height);
+        //Debug.Log("Width: " + Screen.width);
+        //Debug.Log("Hieght: "+  Screen.height);
 
         if (targetScreenPos.y <= 0f)
         {
@@ -89,6 +102,9 @@ public class LockOnCamera : MonoBehaviour
     {
         lockedOn = false;
         cam.SetRotationValues();
+
+        target.destroyed.RemoveListener(StopLockOn);
+        target = null;
     }
 
     public void LockOn()
@@ -99,6 +115,7 @@ public class LockOnCamera : MonoBehaviour
         {
             lockedOn = true;
             target = GetTargetNearestToScreenCenter();
+            target.destroyed.AddListener(StopLockOn);
         }
     }
 
@@ -132,7 +149,7 @@ public class LockOnCamera : MonoBehaviour
         // Use an overlap sphere to detect nearby colliders
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectRadius);
         detectedTargets.Clear();
-        Debug.Log(colliders.Length);
+        //Debug.Log(colliders.Length);
 
         // Loop through the colliders and, if the collider is a lock on target, add it to the targets list
         foreach (Collider collider in colliders)

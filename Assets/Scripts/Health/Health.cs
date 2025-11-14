@@ -30,6 +30,7 @@ public class Health : NetworkBehaviour
     [Header("Events")]
     public UnityEvent onTookDamage;
     public UnityEvent onDied;
+    public UnityEvent onRevived;
 
     public float HealthRatio { get; private set; }
     public int CurrentHealth => currentHealth;
@@ -67,6 +68,19 @@ public class Health : NetworkBehaviour
         NetCurrentHealth.OnValueChanged -= OnHealthChanged;
         NetHealthRatio.OnValueChanged -= OnHealthChanged;
     }
+
+    public void Revive()
+    {
+        if (!IsServer)
+        {
+            return;
+        }
+
+        currentHealth = maxHealth;
+        onRevived?.Invoke();
+        onTookDamage?.Invoke();
+    }
+
 
     private void OnHealthChanged(int oldValue, int newValue)
     {
@@ -119,7 +133,7 @@ public class Health : NetworkBehaviour
 
     private void Die()
     {
-        onDied?.Invoke(); // fire on server too, if needed
+        //onDied?.Invoke(); // fire on server too, if needed
         DieClientRpc();
     }
 

@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxHealth: 700
+  maxHealth: 360
   currentHealth: 0
   attacker: {fileID: 0}
   NetMaxHealth:
@@ -210,6 +210,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onDied:
+    m_PersistentCalls:
+      m_Calls: []
+  onRevived:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1602578878573858596
@@ -344,6 +347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced3e09f44b97af4aa5e674e5e60becc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1756873293118728507
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +418,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d812918c6e4360a488bfad2f08ca9798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 5
+  attacker: {fileID: 3559281108461297344}
 --- !u!1 &2331349178679149399
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d812918c6e4360a488bfad2f08ca9798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 5
+  attacker: {fileID: 3559281108461297344}
 --- !u!1 &4090908709270769691
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +835,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d812918c6e4360a488bfad2f08ca9798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 5
+  attacker: {fileID: 3559281108461297344}
 --- !u!1 &4958051608720011646
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,8 +913,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5390968741863869155, guid: 425c838d27679b543b47f5611d7a38e2, type: 2}
-  m_audioClip: {fileID: 8300000, guid: d5e9037e471f7e944a06589af0888a39, type: 3}
-  m_Resource: {fileID: 8300000, guid: d5e9037e471f7e944a06589af0888a39, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1353,6 +1362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced3e09f44b97af4aa5e674e5e60becc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &3789843043080430089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2453,7 +2465,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 6629160309017753033}
-  sounds: []
+  sounds:
+  - {fileID: 8300000, guid: 4e00612ecdd041a488c3fa0cc3be7cc6, type: 3}
+  - {fileID: 8300000, guid: 983cb2a797e2f3a4daf8d15e266613ed, type: 3}
+  - {fileID: 8300000, guid: 4b8bea6718ba1b940820376e1808c934, type: 3}
+  - {fileID: 8300000, guid: e67b68d6e2b89c74a9578ae38bc52aa3, type: 3}
 --- !u!4 &3789843044913269515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1874929922, guid: 1d6a1f892e553d1499063fb87a1266c4, type: 3}

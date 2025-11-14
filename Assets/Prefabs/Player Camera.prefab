@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289da002a77e5654aa98a80145a6a3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockOnCam: {fileID: 0}
   cameraSmoothSpeed: 1
   horiLookAngle: 0
   vertLookAngle: 0
@@ -243,5 +244,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lockedOn: 0
   camPivot: {fileID: 2614827160336554257}
-  rotationSpeed: 10
-  lockOnHieght: 7
+  rotationSpeed: 8
+  pivotRotationSpeed: 8
+  lockOnHieght: 1
+  target: {fileID: 0}
+  minPivot: -30
+  maxPivot: 10
+  screenPosImage: {fileID: 0}
+  detectRadius: 11.5
+  FOV: 70
+  detectedTargets: []
+  showRadiusGizmo: 1
+  showFovGizmo: 1

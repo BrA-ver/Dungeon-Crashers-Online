@@ -13,7 +13,7 @@ public class Bullet : Hurtbox
         if (other.TryGetComponent(out Hitbox hitbox))
         {
             Debug.Log("Hit");
-            hitbox.TakeDamage(damage);
+            hitbox.TakeDamage(damage, attacker);
         }
 
         Destroy(gameObject);

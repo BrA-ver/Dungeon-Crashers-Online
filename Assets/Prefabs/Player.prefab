@@ -935,7 +935,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d812918c6e4360a488bfad2f08ca9798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 5
+  attacker: {fileID: 9012114577453696938}
 --- !u!1 &2452466590087904173
 GameObject:
   m_ObjectHideFlags: 0
@@ -2295,6 +2296,8 @@ MonoBehaviour:
     duration: 0.25
   comboReset: 1
   rotationSpeed: 15
+  dodgeSpeed: 50
+  dodgeTime: 0.2
 --- !u!114 &8876445104758210219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2308,7 +2311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxHealth: 150
+  maxHealth: 100
   currentHealth: 0
   attacker: {fileID: 0}
   NetMaxHealth:
@@ -2321,6 +2324,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onDied:
+    m_PersistentCalls:
+      m_Calls: []
+  onRevived:
     m_PersistentCalls:
       m_Calls: []
   invincibilityTime: 2

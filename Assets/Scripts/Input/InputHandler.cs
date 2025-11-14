@@ -13,6 +13,8 @@ public class InputHandler : MonoBehaviour
     public event Action onAttackPress;
     public event Action onJumpPress;
     public event Action onLockOnPressed;
+    public event Action onDodgePressed;
+    public event Action onTutotialPressed;
 
     int sceneIndex;
     bool ignoreInput = false;
@@ -35,18 +37,18 @@ public class InputHandler : MonoBehaviour
     private void OnEnable()
     {
         Scene cuurentScene = SceneManager.GetActiveScene();
-        //if (cuurentScene.buildIndex == 0)
-        //{
-        //    Cursor.visible = true;
-        //    Cursor.lockState = CursorLockMode.None;
-        //    ignoreInput = true;
-        //}
-        //else
-        //{
-        //    Cursor.visible = false;
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //    ignoreInput = false;
-        //}
+        if (cuurentScene.buildIndex == 0)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            ignoreInput = true;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            ignoreInput = false;
+        }
     }
 
     private void OnDestroy()
@@ -56,20 +58,20 @@ public class InputHandler : MonoBehaviour
 
     private void OmSceneChange(Scene scene0, Scene scene1)
     {
-        //if (scene1.buildIndex == 0)
-        //{
-        //    Cursor.visible = true;
-        //    Cursor.lockState = CursorLockMode.None;
-        //    ignoreInput = true;
-        //}
-        //else
-        //{
-        //    Cursor.visible = false;
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //    ignoreInput = false;
-        //}
+        if (scene1.buildIndex == 0)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            ignoreInput = true;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            ignoreInput = false;
+        }
 
-        
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -109,6 +111,28 @@ public class InputHandler : MonoBehaviour
         if (context.performed)
         {
             onLockOnPressed?.Invoke();
+            Debug.Log("Lock On Pressed");
+        }
+    }
+
+    public void OnDodge(InputAction.CallbackContext context)
+    {
+        if (ignoreInput) return;
+
+        if (context.performed)
+        {
+            onDodgePressed?.Invoke();
+            Debug.Log("Lock On Pressed");
+        }
+    }
+
+    public void OnTutorial(InputAction.CallbackContext context)
+    {
+        if (ignoreInput) return;
+
+        if (context.performed)
+        {
+            onTutotialPressed?.Invoke();
             Debug.Log("Lock On Pressed");
         }
     }

@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 8324798119162646288}
+  attacker: {fileID: 0}
   flashs: []
   OnTookDamage:
     m_PersistentCalls:
@@ -1286,6 +1287,8 @@ MonoBehaviour:
   attackCombo: []
   comboReset: 1
   rotationSpeed: 12
+  dodgeSpeed: 10
+  dodgeTime: 1
   bullet: {fileID: 6145985284389453046, guid: 62a89cf815874264e92128b799028906, type: 3}
   shootSpeed: 25
   bulletSpawn: {fileID: 2450465074968343362}
@@ -1302,8 +1305,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  maxHealth: 150
+  maxHealth: 100
   currentHealth: 0
+  attacker: {fileID: 0}
   NetMaxHealth:
     m_InternalValue: 10
   NetCurrentHealth:
@@ -1314,6 +1318,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onDied:
+    m_PersistentCalls:
+      m_Calls: []
+  onRevived:
     m_PersistentCalls:
       m_Calls: []
   invincibilityTime: 2

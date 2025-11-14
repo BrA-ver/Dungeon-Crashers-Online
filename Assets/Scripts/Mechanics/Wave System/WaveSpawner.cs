@@ -49,8 +49,8 @@ public class WaveSpawner : NetworkBehaviour
 
     public void StartWave()
     {
-        if (!IsServer)
-            return;
+        //if (!IsServer)
+        //    return;
         StartCoroutine(StartBattleRoutine());
         
     }
@@ -123,6 +123,7 @@ public class WaveSpawner : NetworkBehaviour
     void StartBattleClientRpc()
     {
         onBattleStarted?.Invoke();
+        AudioManager.instance.PlayMusic("Combat");
     }
 
     [ClientRpc]

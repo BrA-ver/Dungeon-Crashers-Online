@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
@@ -28,6 +29,15 @@ public class GameManager : NetworkBehaviour
     private void Start()
     {
         NetworkManager.Singleton.OnServerStarted += OnServerStated;
+        SceneManager.activeSceneChanged += OnActiveSceneChanges;
+    }
+
+    private void OnActiveSceneChanges(Scene oldScene, Scene newScene)
+    {
+        if(newScene.buildIndex == 1)
+        {
+            AudioManager.instance.PlayMusic("Lobby");
+        }
     }
 
     private void OnServerStated()
@@ -40,4 +50,6 @@ public class GameManager : NetworkBehaviour
         players.Add(player);
         //activePlayers.Value = players;
     }
+
+
 }

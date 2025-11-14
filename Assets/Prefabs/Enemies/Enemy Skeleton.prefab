@@ -1,5 +1,74 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3534501889431824422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5345517235715998937}
+  - component: {fileID: 279978978030750404}
+  - component: {fileID: 3856843523886380820}
+  m_Layer: 10
+  m_Name: Lock On Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5345517235715998937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534501889431824422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2153448660705143624}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &279978978030750404
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534501889431824422}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.09
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3856843523886380820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534501889431824422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced3e09f44b97af4aa5e674e5e60becc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4635563909634063230
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 5106512335675138173}
+  attacker: {fileID: 0}
   flashs:
   - {fileID: 8840470140585706174}
   - {fileID: 3656338184522856776}
@@ -852,6 +922,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: dc9e353d91e19524bbfe100dff5f3599, type: 3}
       insertIndex: -1
       addedObject: {fileID: 828776329510682985}
+    - targetCorrespondingSourceObject: {fileID: -5215991901736301381, guid: dc9e353d91e19524bbfe100dff5f3599, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5345517235715998937}
     - targetCorrespondingSourceObject: {fileID: 7997947301047521070, guid: dc9e353d91e19524bbfe100dff5f3599, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2937807096094929066}
@@ -933,6 +1006,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashTime: 0.25
   flashMaterial: {fileID: 2100000, guid: fc4a4be9d7cc14e46921c16daea5a6b7, type: 2}
+--- !u!4 &2153448660705143624 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5215991901736301381, guid: dc9e353d91e19524bbfe100dff5f3599, type: 3}
+  m_PrefabInstance: {fileID: 3062312667859347443}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2300196455193725038 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3860839804459560861, guid: dc9e353d91e19524bbfe100dff5f3599, type: 3}
@@ -1170,12 +1248,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee005d0ba4a5c34c9b6e3d5d1dce388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHealth: 15
   currentHealth: 0
+  attacker: {fileID: 0}
+  NetMaxHealth:
+    m_InternalValue: 10
+  NetCurrentHealth:
+    m_InternalValue: 0
+  NetHealthRatio:
+    m_InternalValue: 1
   onTookDamage:
     m_PersistentCalls:
       m_Calls: []
   onDied:
+    m_PersistentCalls:
+      m_Calls: []
+  onRevived:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5766368589952736530
@@ -1203,6 +1292,7 @@ MonoBehaviour:
     dashSpeed: 0
     duration: 0
     weight: 10
+  rotationSpeed: 6
 --- !u!4 &3311619453821779992 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dc9e353d91e19524bbfe100dff5f3599, type: 3}
@@ -1450,7 +1540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d812918c6e4360a488bfad2f08ca9798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 5
+  attacker: {fileID: 0}
 --- !u!4 &2937807096094929066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 57251162f6997e1419b288549619fa08, type: 3}

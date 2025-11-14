@@ -12,13 +12,14 @@ public class Hitbox : MonoBehaviour
 
     public UnityEvent OnTookDamage;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Character attacker)
     {
         foreach (DamageFlash flash in flashs)
         {
             flash.Flash();
         }
         OnTookDamage?.Invoke();
+        this.attacker = attacker;
         health.TakeDamage(damage, attacker);
     }
 }

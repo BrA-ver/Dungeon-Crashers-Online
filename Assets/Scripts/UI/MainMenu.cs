@@ -4,6 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Start()
+    {
+        AudioManager.instance.PlayMusic("Main Menu");
+    }
+
     public void PlayAsHost()
     {
         //NetworkManager.Singleton.StartHost();

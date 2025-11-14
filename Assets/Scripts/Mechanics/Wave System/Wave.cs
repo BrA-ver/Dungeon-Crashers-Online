@@ -56,6 +56,8 @@ public class Wave : NetworkBehaviour
 
     protected void OnEnemyDied()
     {
+        if (!IsServer)
+            return;
         deadEnemyNum++;
         bool allEnemiesDead = deadEnemyNum >= enemies.Count;
         Debug.Log("Dead Enemies: " + deadEnemyNum);

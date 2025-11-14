@@ -1,16 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LockOnTarget : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public UnityEvent destroyed;
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        destroyed?.Invoke();
     }
 }
